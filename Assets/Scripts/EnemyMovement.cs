@@ -38,7 +38,7 @@ public class EnemyMovement : MonoBehaviour
         playerPos = managerInstance.GetPlayerMovement().GetPlayerTransform();
         thisAgent.isStopped = false;
 
-        managerInstance.GetEnemyHealth().OnEnemyDeath.AddListener(onDeath);
+        managerInstance.GetEnemyHealth(gameObject).OnEnemyDeath.AddListener(onDeath);
     }
 
     // Update is called once per frame

@@ -37,20 +37,24 @@ public class GameManager : MonoBehaviour
     public PlayerMovement GetPlayerMovement() {  return playerMovement; }
     public PlayerHealth GetPlayerHealth() { return playerHealth; }
     public Gun GetPlayerGun() { return gun; }
-    public EnemyMovement GetEnemyMovement()  //TODO: go through the Dictionary and find the correct script to reference in these two thingamajigs
+    public EnemyMovement GetEnemyMovement(GameObject _enemy)  //TODO: go through the Dictionary and find the correct script to reference in these two thingamajigs
     {
-        EnemyMovement _neededMovement = null;
+        EnemyMovement _neededMovement = _enemy.GetComponent<EnemyMovement>();
         return _neededMovement; 
     }
-    public EnemyHealth GetEnemyHealth() 
+    public EnemyHealth GetEnemyHealth(GameObject _enemy) 
     {
-        EnemyHealth _neededEnemyHealth = null;
+        EnemyHealth _neededEnemyHealth = _enemy.GetComponent<EnemyHealth>();
         return _neededEnemyHealth; 
     }
 
     void spawnEnemies()
     {
-        int _amountOfEnemiesPerTransform = amountOfEnemies / enemySpawnPoints.Count;
+        int _amountOfEnemiesPerTransform = 0;
+        if (enemySpawnPoints.Count <= 0)
+            _amountOfEnemiesPerTransform = amountOfEnemies / 1;
+        else
+            _amountOfEnemiesPerTransform = amountOfEnemies / enemySpawnPoints.Count;
         int _amountAtCurrentSpawn = 0;
         int _currentSpawnPoint = 0;
         for (int i = 0; i < amountOfEnemies; i++)
