@@ -345,7 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50d6096cb502d57489700fd25144f094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sightRange: 13.6
+  sightRange: 15
   attackRange: 3.2
   timeBetweenAttacks: 3
   attackDamage: 1
@@ -1425,6 +1425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 0}
   bubbleParticles: {fileID: 0}
+  particleTimer: 5
   shootCoolDown: 0.4
   damage: 0
   shootKey: 323
