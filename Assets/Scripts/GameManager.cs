@@ -50,7 +50,11 @@ public class GameManager : MonoBehaviour
 
     void spawnEnemies()
     {
-        int _amountOfEnemiesPerTransform = amountOfEnemies / enemySpawnPoints.Count;
+        int _amountOfEnemiesPerTransform = 0;
+        if (enemySpawnPoints.Count <= 0)
+            _amountOfEnemiesPerTransform = amountOfEnemies / 1;
+        else
+            _amountOfEnemiesPerTransform = amountOfEnemies / enemySpawnPoints.Count;
         int _amountAtCurrentSpawn = 0;
         int _currentSpawnPoint = 0;
         for (int i = 0; i < amountOfEnemies; i++)

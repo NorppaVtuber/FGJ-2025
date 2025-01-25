@@ -61,10 +61,10 @@ public class Gun : MonoBehaviour
         RaycastHit _hit;
         if (Physics.Raycast(_ray, out _hit))
         {
-            Debug.Log("hit something");
+            Debug.Log("hit  " + _hit.collider.gameObject.name);
             if(_hit.collider.tag == "Enemy")
             {
-                managerInstance.GetEnemyHealth(_hit.collider.gameObject).TakeDamage(damage); //TODO: get the specific enemy hit and then get that enemy's health
+                managerInstance.GetEnemyHealth(_hit.collider.gameObject.transform.parent.gameObject).TakeDamage(damage);
                 Debug.Log("Hit enemy");
             }
         }

@@ -1121,8 +1121,10 @@ MonoBehaviour:
   playerMovement: {fileID: 2144666950}
   playerHealth: {fileID: 2144666951}
   gun: {fileID: 1980261332}
-  enemyMovement: {fileID: 382045387}
-  enemyHealth: {fileID: 382045386}
+  enemyPrefab: {fileID: 0}
+  amountOfEnemies: 1
+  enemySpawnPoints: []
+  spawnDistance: 1
 --- !u!4 &1365150278
 Transform:
   m_ObjectHideFlags: 0
@@ -1539,7 +1541,7 @@ GameObject:
   - component: {fileID: 1795365048}
   m_Layer: 0
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
