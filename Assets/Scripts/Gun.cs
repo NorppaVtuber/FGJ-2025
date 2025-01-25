@@ -5,9 +5,7 @@ using UnityEngine.Events;
 public class Gun : MonoBehaviour
 {
     [Header("SetInEditor")]
-    [SerializeField] GameObject projectile;
     [SerializeField] ParticleSystem bubbleParticles;
-    [SerializeField] float particleTimer = 5f;
 
     [Header("Gun control is meaningless, we only offer hopes and prayers in this household")]
     [SerializeField] float shootCoolDown;
@@ -54,18 +52,19 @@ public class Gun : MonoBehaviour
 
         isReadyToShoot = false;
 
-        Instantiate(bubbleParticles, transform.position, transform.rotation); //the rotation probably isn't correct quite yet
+        Instantiate(bubbleParticles, transform.position, transform.rotation); //the rotation probably isn't correct quite yet <-- Yes it is, past Norppa is a liar
 
         Debug.Log("pew pew");
-        Vector3 _screenCenter = new Vector3(Screen.width/2, Screen.height/2, 0);
+        Vector3 _screenCenter = new Vector3(Screen.width/2, Screen.height/2, 0); //Y U no work???
 
         var _ray = Camera.main.ScreenPointToRay(_screenCenter);
         RaycastHit _hit;
         if (Physics.Raycast(_ray, out _hit))
         {
+            Debug.Log("hit something");
             if(_hit.collider.tag == "Enemy")
             {
-                managerInstance.GetEnemyHealth().TakeDamage(damage);
+                managerInstance.GetEnemyHealth().TakeDamage(damage); //TODO: get the specific enemy hit and then get that enemy's health
                 Debug.Log("Hit enemy");
             }
         }

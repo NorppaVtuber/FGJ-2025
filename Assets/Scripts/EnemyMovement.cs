@@ -99,12 +99,5 @@ public class EnemyMovement : MonoBehaviour
     {
         thisAgent.isStopped = true;
         Instantiate(enemyDeathParticle, transform.position, Quaternion.identity);
-        StartCoroutine(deathTimer());
-    }
-
-    IEnumerator deathTimer()
-    {
-        yield return new WaitForSeconds(3f);
-        Destroy(gameObject);
     }
 }

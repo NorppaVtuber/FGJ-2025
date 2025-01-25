@@ -54,6 +54,11 @@ public class PlayerMovement : MonoBehaviour
         managerInstance = GameManager.Instance;
         managerInstance.GetPlayerHealth().OnDeath.AddListener(onDeath);
         currentMoveState = MoveStates.WALK;
+
+        if(startPoint != null)
+        {
+            transform.position = startPoint.position;
+        }
     }
 
     private void Update()
