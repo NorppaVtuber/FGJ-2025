@@ -1221,7 +1221,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.92913634, g: 0.5019608, b: 1, a: 1}
+      maxColor: {r: 0.5019608, g: 0.8812456, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.29803923, g: 0.29803923, b: 0.29803923, a: 1}
@@ -5954,7 +5954,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {fileID: 0}
   rgb: {fileID: 2144666947}
-  speed: 7
+  normalSpeed: 0
+  sprintSpeed: 0
   speedMultiplier: 10
   orientation: {fileID: 1358973563}
   groundDrag: 5
@@ -5966,6 +5967,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   jumpKey: 32
+  sprintKey: 304
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
