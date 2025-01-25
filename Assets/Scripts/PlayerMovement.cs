@@ -43,6 +43,8 @@ public class PlayerMovement : MonoBehaviour
 
     GameManager managerInstance;
 
+    public Transform GetPlayerTransform() { return transform; }
+
     private void Start()
     {
         rgb.freezeRotation = true;
