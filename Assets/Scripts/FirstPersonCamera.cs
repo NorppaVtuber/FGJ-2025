@@ -10,9 +10,14 @@ public class FirstPersonCamera : MonoBehaviour
     float xRotation;
     float yRotation;
 
+    GameManager managerInstance;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (managerInstance == null)
+            managerInstance = GameManager.Instance;
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -20,6 +25,9 @@ public class FirstPersonCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (managerInstance.GetPlayerHealth().GetIsDead())
+            return;
+
         //get mouse input
         float _mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
         float _mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;

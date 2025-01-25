@@ -33,6 +33,8 @@ public class PlayerHealth : MonoBehaviour
 
         OnDamageTaken.Invoke(); //update any UI elements with this
 
+        Debug.Log("Player took damage!");
+
         if(currentHealth <= 0)
         {
             OnDeath.Invoke();

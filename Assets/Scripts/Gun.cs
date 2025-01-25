@@ -15,10 +15,14 @@ public class Gun : MonoBehaviour
     [Header("Keybinds")]
     [SerializeField] KeyCode shootKey = KeyCode.Mouse0;
 
+    GameManager managerInstance;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         isReadyToShoot = true;
+        if (managerInstance == null)
+            managerInstance = GameManager.Instance;
     }
 
     // Update is called once per frame
@@ -31,6 +35,8 @@ public class Gun : MonoBehaviour
 
     void collectInput()
     {
+        if (managerInstance.GetPlayerHealth().GetIsDead())
+            return;
         if(Input.GetKey(shootKey))
         {
             shootBubbles();

@@ -82,10 +82,10 @@ public class EnemyMovement : MonoBehaviour
     {
         isAttacking = true;
 
-        yield return new WaitForSeconds(timeBetweenAttacks);
-
         Debug.Log("Hurt player"); //TODO: add actual attacking
         managerInstance.GetPlayerHealth().TakeDamage(attackDamage);
+
+        yield return new WaitForSeconds(timeBetweenAttacks);
 
         isAttacking = false;
     }
