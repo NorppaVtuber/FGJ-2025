@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject enemyPrefab;
     [SerializeField] int amountOfEnemies;
     [SerializeField] List<Transform> enemySpawnPoints;
+    [SerializeField] float spawnDistance;
 
     List<EnemyMovement> enemyMovement;
     List<EnemyHealth> enemyHealth;
@@ -29,6 +30,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         playerHealth.OnDamageTaken.AddListener(updateUI);
+        enemyMovement = new List<EnemyMovement> ();
+        enemyHealth = new List<EnemyHealth> ();
 
         spawnEnemies();
     }
@@ -74,9 +77,12 @@ public class GameManager : MonoBehaviour
 
     void randomizeSpawnpoints(Transform _currentSpawnPoint)
     {
-        //TODO: some logic about the enemy spawns being lightly randomized around the "big" spawn point so they aren't all in the exac same point
-        //It needs some logic to make sure they don't end up outside the navmesh though. But I remember there was some check for that, I'm just too tired to try and figure it out rn
-        //also add all their scripts to a List
+        GameObject _newEnemy = Instantiate(enemyPrefab, _currentSpawnPoint);
+        enemyHealth.Add(_newEnemy.GetComponent<EnemyHealth>());
+        EnemyMovement _savedMovement = _newEnemy.GetComponent<EnemyMovement>();
+        enemyMovement.Add(_savedMovement);
+
+        _savedMovement.RandomizeStartPosition(_currentSpawnPoint, spawnDistance);
     }
 
     void updateUI()

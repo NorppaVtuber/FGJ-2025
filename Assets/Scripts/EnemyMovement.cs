@@ -77,6 +77,17 @@ public class EnemyMovement : MonoBehaviour
     }
 #endif
 
+    public void RandomizeStartPosition(Transform _currentSpawnPoint, float _spawnDistance)
+    {
+        Vector3 _randomDirection = Random.insideUnitSphere * _spawnDistance;
+        _randomDirection += transform.position;
+        NavMeshHit _hit;
+        NavMesh.SamplePosition(_randomDirection, out _hit, _spawnDistance, 1);
+        Vector3 _finalPosition = _hit.position;
+
+        thisAgent.SetDestination(_finalPosition);
+    }
+
     void chasePlayer()
     {
         Debug.Log("Chasing player");
