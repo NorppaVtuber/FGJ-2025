@@ -12,7 +12,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Rigidbody rgb;
 
     [Header("Movement values")]
-    [SerializeField] float speed = 25f;
+    float speed = 25f;
+    [SerializeField] float normalSpeed;
+    [SerializeField] float sprintSpeed;
     [SerializeField] float speedMultiplier = 10f;
     [SerializeField] Transform orientation;
     [SerializeField] float groundDrag;
@@ -21,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpCoolDown;
     [SerializeField] float airMultiplier;
     bool isReadyToJump;
+    MoveStates currentMoveState = MoveStates.NONE;
 
     [Header("Ground Check")]
     [SerializeField] float playerHeight;
@@ -29,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Keybinds")]
     [SerializeField] KeyCode jumpKey = KeyCode.Space;
+    [SerializeField] KeyCode sprintKey = KeyCode.LeftShift;
 
     float horizontalInput;
     float verticalInput;
@@ -47,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
         managerInstance = GameManager.Instance;
         managerInstance.GetPlayerHealth().OnDeath.AddListener(onDeath);
+        currentMoveState = MoveStates.WALK;
     }
 
     private void Update()
@@ -56,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
 
         collectInput();
         speedControl();
+        moveStateHandler();
 
         if (isGrounded)
             rgb.linearDamping = groundDrag;
@@ -131,5 +137,23 @@ public class PlayerMovement : MonoBehaviour
     void onDeath()
     {
         isDead = true;
+    }
+
+    void moveStateHandler()
+    {
+        if(isGrounded && Input.GetKey(sprintKey))
+        {
+            currentMoveState = MoveStates.SPRINT;
+            speed = sprintSpeed;
+        }
+        else if(isGrounded)
+        {
+            currentMoveState = MoveStates.WALK;
+            speed = normalSpeed;
+        }
+        else
+        {
+            currentMoveState = MoveStates.JUMP;
+        }
     }
 }

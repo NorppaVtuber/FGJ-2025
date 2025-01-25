@@ -1414,7 +1414,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {fileID: 0}
   rgb: {fileID: 2144666947}
-  speed: 7
+  normalSpeed: 7
+  sprintSpeed: 10
   speedMultiplier: 10
   orientation: {fileID: 1358973563}
   groundDrag: 5
@@ -1426,6 +1427,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   jumpKey: 32
+  sprintKey: 304
 --- !u!114 &2144666951
 MonoBehaviour:
   m_ObjectHideFlags: 0

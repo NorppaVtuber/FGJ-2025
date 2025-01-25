@@ -46,6 +46,8 @@ public class Gun : MonoBehaviour
 
         isReadyToShoot = false;
         Debug.Log("pew pew");
+        //need to instantiate some kind of invisible projectile that causes damage as a particle system can't do that
+        //also need to instantiate the particle system once that's done
     }
 
     void resetShooting()
