@@ -2,7 +2,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
+using UnityEngine.Events;
 
+//TODO: sprint
 public class PlayerMovement : MonoBehaviour
 {
     [Header("SetInInspector")]
@@ -10,7 +12,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Rigidbody rgb;
 
     [Header("Movement values")]
-    [SerializeField] float speed = 25f;
+    float speed = 25f;
+    [SerializeField] float normalSpeed;
+    [SerializeField] float sprintSpeed;
     [SerializeField] float speedMultiplier = 10f;
     [SerializeField] Transform orientation;
     [SerializeField] float groundDrag;
@@ -19,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpCoolDown;
     [SerializeField] float airMultiplier;
     bool isReadyToJump;
+    MoveStates currentMoveState = MoveStates.NONE;
 
     [Header("Ground Check")]
     [SerializeField] float playerHeight;
@@ -27,16 +32,26 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Keybinds")]
     [SerializeField] KeyCode jumpKey = KeyCode.Space;
+    [SerializeField] KeyCode sprintKey = KeyCode.LeftShift;
 
     float horizontalInput;
     float verticalInput;
 
     Vector3 moveDirection;
 
+    bool isDead = false;
+
+    GameManager managerInstance;
+
     private void Start()
     {
         rgb.freezeRotation = true;
         isReadyToJump = true;
+        isDead = false;
+
+        managerInstance = GameManager.Instance;
+        managerInstance.GetPlayerHealth().OnDeath.AddListener(onDeath);
+        currentMoveState = MoveStates.WALK;
     }
 
     private void Update()
@@ -46,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
 
         collectInput();
         speedControl();
+        moveStateHandler();
 
         if (isGrounded)
             rgb.linearDamping = groundDrag;
@@ -60,6 +76,9 @@ public class PlayerMovement : MonoBehaviour
 
     void collectInput()
     {
+        if (isDead)
+            return;
+
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
@@ -73,6 +92,8 @@ public class PlayerMovement : MonoBehaviour
 
     void movePlayer()
     {
+        if (isDead)
+            return;
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
         if (isGrounded)
@@ -95,6 +116,8 @@ public class PlayerMovement : MonoBehaviour
 
     void jump()
     {
+        if (isDead)
+            return;
         //if player isn't ready to jump, don't let them jump again
         if (!isReadyToJump)
             return;
@@ -111,4 +134,26 @@ public class PlayerMovement : MonoBehaviour
         isReadyToJump = true;
     }
 
+    void onDeath()
+    {
+        isDead = true;
+    }
+
+    void moveStateHandler()
+    {
+        if(isGrounded && Input.GetKey(sprintKey))
+        {
+            currentMoveState = MoveStates.SPRINT;
+            speed = sprintSpeed;
+        }
+        else if(isGrounded)
+        {
+            currentMoveState = MoveStates.WALK;
+            speed = normalSpeed;
+        }
+        else
+        {
+            currentMoveState = MoveStates.JUMP;
+        }
+    }
 }
