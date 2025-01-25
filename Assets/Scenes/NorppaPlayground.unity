@@ -1284,9 +1284,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c0abd3687ca2c14381b2f1b77a0f5f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMovement: {fileID: 0}
-  playerHealth: {fileID: 0}
-  gun: {fileID: 0}
+  playerMovement: {fileID: 2144666950}
+  playerHealth: {fileID: 2144666951}
+  gun: {fileID: 1506734715}
   enemyTypes: []
 --- !u!4 &1365150278
 Transform:

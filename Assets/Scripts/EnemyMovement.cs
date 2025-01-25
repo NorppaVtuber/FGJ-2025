@@ -38,6 +38,10 @@ public class EnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if ((managerInstance == null))
+        {
+            Debug.Log("No manager instance found");
+        }
         if (isDead || managerInstance.GetPlayerHealth().GetIsDead())
             return;
 
