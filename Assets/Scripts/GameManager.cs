@@ -16,8 +16,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] List<Transform> enemySpawnPoints;
     [SerializeField] float spawnDistance;
 
-    List<EnemyMovement> enemyMovement;
-    List<EnemyHealth> enemyHealth;
+    Dictionary<EnemyMovement, EnemyHealth> enemies;
 
     private void Awake()
     {
@@ -30,8 +29,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         playerHealth.OnDamageTaken.AddListener(updateUI);
-        enemyMovement = new List<EnemyMovement> ();
-        enemyHealth = new List<EnemyHealth> ();
+        enemies = new Dictionary<EnemyMovement, EnemyHealth>();
 
         spawnEnemies();
     }
@@ -39,7 +37,7 @@ public class GameManager : MonoBehaviour
     public PlayerMovement GetPlayerMovement() {  return playerMovement; }
     public PlayerHealth GetPlayerHealth() { return playerHealth; }
     public Gun GetPlayerGun() { return gun; }
-    public EnemyMovement GetEnemyMovement() 
+    public EnemyMovement GetEnemyMovement()  //TODO: go through the Dictionary and find the correct script to reference in these two thingamajigs
     {
         EnemyMovement _neededMovement = null;
         return _neededMovement; 
@@ -78,9 +76,9 @@ public class GameManager : MonoBehaviour
     void randomizeSpawnpoints(Transform _currentSpawnPoint)
     {
         GameObject _newEnemy = Instantiate(enemyPrefab, _currentSpawnPoint);
-        enemyHealth.Add(_newEnemy.GetComponent<EnemyHealth>());
         EnemyMovement _savedMovement = _newEnemy.GetComponent<EnemyMovement>();
-        enemyMovement.Add(_savedMovement);
+
+        enemies.Add(_savedMovement, _newEnemy.GetComponent<EnemyHealth>());
 
         _savedMovement.RandomizeStartPosition(_currentSpawnPoint, spawnDistance);
     }
