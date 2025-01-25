@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
 using System.Collections;
+using System.Collections.Generic;
 
 //TODO: navigation using navmesh, movement, attack, finding the player (FSM?)
 public class EnemyMovement : MonoBehaviour
@@ -21,6 +22,7 @@ public class EnemyMovement : MonoBehaviour
 
     [Header("VFX stuffs")]
     [SerializeField] ParticleSystem enemyDeathParticle;
+    [SerializeField] List<GameObject> possibleEnemyMeshes;
 
     bool isDead = false;
     bool isAttacking = false;
@@ -39,6 +41,10 @@ public class EnemyMovement : MonoBehaviour
         thisAgent.isStopped = false;
 
         managerInstance.GetEnemyHealth(gameObject).OnEnemyDeath.AddListener(onDeath);
+
+        int _randomMesh = Random.Range(0, possibleEnemyMeshes.Count);
+        GameObject _chosenMesh = Instantiate(possibleEnemyMeshes[_randomMesh]);
+        _chosenMesh.transform.parent = gameObject.transform;
     }
 
     // Update is called once per frame
@@ -98,7 +104,7 @@ public class EnemyMovement : MonoBehaviour
     {
         isAttacking = true;
 
-        Debug.Log("Hurt player"); //TODO: add actual attacking
+        Debug.Log("Hurt player");
         managerInstance.GetPlayerHealth().TakeDamage(attackDamage);
 
         yield return new WaitForSeconds(timeBetweenAttacks);

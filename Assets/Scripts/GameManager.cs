@@ -4,6 +4,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    [Header("UI stuff")]
+    [SerializeField] List<GameObject> healthBubbles;
 
     [Header("PlayerStuffs")]
     [SerializeField] PlayerMovement playerMovement;
@@ -89,6 +91,13 @@ public class GameManager : MonoBehaviour
 
     void updateUI()
     {
-        //code to update health bubbles hereeee
+        for (int i = 0; i < healthBubbles.Count; i++)
+        {
+            if(healthBubbles[i].activeSelf == true)
+            {
+                healthBubbles[i].SetActive(false);
+                return;
+            }
+        }
     }
 }
