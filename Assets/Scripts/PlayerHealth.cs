@@ -31,7 +31,7 @@ public class PlayerHealth : MonoBehaviour
 
         OnDamageTaken.Invoke();
 
-        if(currentHealth < 0)
+        if(currentHealth <= 0)
         {
             OnDeath.Invoke();
         }
