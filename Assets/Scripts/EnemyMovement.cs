@@ -9,7 +9,7 @@ public class EnemyMovement : MonoBehaviour
     GameManager managerInstance;
 
     [Header("Movement Values")]
-    [SerializeField] float enemySpeed;
+    //[SerializeField] float enemySpeed;
     [Range(0, 50)] [SerializeField] float sightRange = 20;
 
     NavMeshAgent thisAgent;
@@ -33,22 +33,20 @@ public class EnemyMovement : MonoBehaviour
 
         thisAgent = GetComponent<NavMeshAgent>();
         playerPos = managerInstance.GetPlayerMovement().GetPlayerTransform();
+        thisAgent.isStopped = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if ((managerInstance == null))
-        {
-            Debug.Log("No manager instance found");
-        }
         if (isDead || managerInstance.GetPlayerHealth().GetIsDead())
             return;
 
-        float _distanceFromPlayer = Vector3.Distance(playerPos.position, this.transform.position);
+        float _distanceFromPlayer = Vector3.Distance(playerPos.position, transform.position);
 
         if (_distanceFromPlayer <= sightRange && _distanceFromPlayer > attackRange)
         {
+            //Debug.Log("Player seen");
             isAttacking = false;
             thisAgent.isStopped = false;
             StopAllCoroutines();
@@ -76,6 +74,7 @@ public class EnemyMovement : MonoBehaviour
 
     void chasePlayer()
     {
+        Debug.Log("Chasing player");
         thisAgent.SetDestination(playerPos.position);
     }
 
