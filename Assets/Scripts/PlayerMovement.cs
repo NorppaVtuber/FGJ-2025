@@ -2,7 +2,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
+using UnityEngine.Events;
 
+//TODO: sprint
 public class PlayerMovement : MonoBehaviour
 {
     [Header("SetInInspector")]
@@ -33,10 +35,18 @@ public class PlayerMovement : MonoBehaviour
 
     Vector3 moveDirection;
 
+    bool isDead = false;
+
+    GameManager managerInstance;
+
     private void Start()
     {
         rgb.freezeRotation = true;
         isReadyToJump = true;
+        isDead = false;
+
+        managerInstance = GameManager.Instance;
+        managerInstance.GetPlayerHealth().OnDeath.AddListener(onDeath);
     }
 
     private void Update()
@@ -60,6 +70,9 @@ public class PlayerMovement : MonoBehaviour
 
     void collectInput()
     {
+        if (isDead)
+            return;
+
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
@@ -73,6 +86,8 @@ public class PlayerMovement : MonoBehaviour
 
     void movePlayer()
     {
+        if (isDead)
+            return;
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
         if (isGrounded)
@@ -95,6 +110,8 @@ public class PlayerMovement : MonoBehaviour
 
     void jump()
     {
+        if (isDead)
+            return;
         //if player isn't ready to jump, don't let them jump again
         if (!isReadyToJump)
             return;
@@ -111,4 +128,8 @@ public class PlayerMovement : MonoBehaviour
         isReadyToJump = true;
     }
 
+    void onDeath()
+    {
+        isDead = true;
+    }
 }
