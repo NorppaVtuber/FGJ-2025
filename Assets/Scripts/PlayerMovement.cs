@@ -58,8 +58,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (isDead) //don't update the player if they're dead
+            return;
         //check if player is on ground
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * .5f + .2f, whatIsGround);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * .5f, whatIsGround);
 
         collectInput();
         speedControl();

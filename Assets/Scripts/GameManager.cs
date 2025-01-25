@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Gun gun;
 
     [Header("EnemyStuffs")]
-    [SerializeField] GameObject[] enemyTypes;
+    [SerializeField] EnemyMovement enemyMovement;
+    [SerializeField] EnemyHealth enemyHealth;
 
     private void Awake()
     {
@@ -24,4 +25,6 @@ public class GameManager : MonoBehaviour
     public PlayerMovement GetPlayerMovement() {  return playerMovement; }
     public PlayerHealth GetPlayerHealth() { return playerHealth; }
     public Gun GetPlayerGun() { return gun; }
+    public EnemyMovement GetEnemyMovement() { return enemyMovement; }
+    public EnemyHealth GetEnemyHealth() { return enemyHealth; }
 }

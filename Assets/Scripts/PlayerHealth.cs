@@ -10,7 +10,7 @@ public class PlayerHealth : MonoBehaviour
     public UnityEvent OnDamageTaken; //add a listener to this for the UI script (eventually), that hndles updating the UI sprites
     public UnityEvent OnDeath;
 
-    public bool GetIsDead() { return currentHealth > 0; }
+    public bool GetIsDead() { return currentHealth <= 0; }
 
     private void Awake()
     {
@@ -32,6 +32,8 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= _damageAmount;
 
         OnDamageTaken.Invoke(); //update any UI elements with this
+
+        Debug.Log("Player took damage!");
 
         if(currentHealth <= 0)
         {

@@ -9,7 +9,7 @@ public class EnemyMovement : MonoBehaviour
     GameManager managerInstance;
 
     [Header("Movement Values")]
-    [SerializeField] float enemySpeed;
+    //[SerializeField] float enemySpeed;
     [Range(0, 50)] [SerializeField] float sightRange = 20;
 
     NavMeshAgent thisAgent;
@@ -18,6 +18,9 @@ public class EnemyMovement : MonoBehaviour
     [Range(0, 50)] [SerializeField] float attackRange = 5f;
     [SerializeField] float timeBetweenAttacks = 3f;
     [SerializeField] int attackDamage;
+
+    [Header("VFX stuffs")]
+    [SerializeField] ParticleSystem enemyDeathParticle;
 
     bool isDead = false;
     bool isAttacking = false;
@@ -33,6 +36,9 @@ public class EnemyMovement : MonoBehaviour
 
         thisAgent = GetComponent<NavMeshAgent>();
         playerPos = managerInstance.GetPlayerMovement().GetPlayerTransform();
+        thisAgent.isStopped = false;
+
+        managerInstance.GetEnemyHealth().OnEnemyDeath.AddListener(onDeath);
     }
 
     // Update is called once per frame
@@ -41,10 +47,11 @@ public class EnemyMovement : MonoBehaviour
         if (isDead || managerInstance.GetPlayerHealth().GetIsDead())
             return;
 
-        float _distanceFromPlayer = Vector3.Distance(playerPos.position, this.transform.position);
+        float _distanceFromPlayer = Vector3.Distance(playerPos.position, transform.position);
 
         if (_distanceFromPlayer <= sightRange && _distanceFromPlayer > attackRange)
         {
+            //Debug.Log("Player seen");
             isAttacking = false;
             thisAgent.isStopped = false;
             StopAllCoroutines();
@@ -72,6 +79,7 @@ public class EnemyMovement : MonoBehaviour
 
     void chasePlayer()
     {
+        Debug.Log("Chasing player");
         thisAgent.SetDestination(playerPos.position);
     }
 
@@ -79,11 +87,24 @@ public class EnemyMovement : MonoBehaviour
     {
         isAttacking = true;
 
-        yield return new WaitForSeconds(timeBetweenAttacks);
-
         Debug.Log("Hurt player"); //TODO: add actual attacking
         managerInstance.GetPlayerHealth().TakeDamage(attackDamage);
 
+        yield return new WaitForSeconds(timeBetweenAttacks);
+
         isAttacking = false;
+    }
+
+    void onDeath()
+    {
+        thisAgent.isStopped = true;
+        Instantiate(enemyDeathParticle, transform.position, Quaternion.identity);
+        StartCoroutine(deathTimer());
+    }
+
+    IEnumerator deathTimer()
+    {
+        yield return new WaitForSeconds(3f);
+        Destroy(gameObject);
     }
 }
