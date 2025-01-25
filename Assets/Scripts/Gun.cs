@@ -64,7 +64,7 @@ public class Gun : MonoBehaviour
             Debug.Log("hit something");
             if(_hit.collider.tag == "Enemy")
             {
-                managerInstance.GetEnemyHealth().TakeDamage(damage); //TODO: get the specific enemy hit and then get that enemy's health
+                managerInstance.GetEnemyHealth(_hit.collider.gameObject).TakeDamage(damage); //TODO: get the specific enemy hit and then get that enemy's health
                 Debug.Log("Hit enemy");
             }
         }
