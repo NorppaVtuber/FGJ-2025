@@ -19,6 +19,9 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] float timeBetweenAttacks = 3f;
     [SerializeField] int attackDamage;
 
+    [Header("VFX stuffs")]
+    [SerializeField] ParticleSystem enemyDeathParticle;
+
     bool isDead = false;
     bool isAttacking = false;
 
@@ -34,6 +37,8 @@ public class EnemyMovement : MonoBehaviour
         thisAgent = GetComponent<NavMeshAgent>();
         playerPos = managerInstance.GetPlayerMovement().GetPlayerTransform();
         thisAgent.isStopped = false;
+
+        managerInstance.GetEnemyHealth().OnEnemyDeath.AddListener(onDeath);
     }
 
     // Update is called once per frame
@@ -88,5 +93,18 @@ public class EnemyMovement : MonoBehaviour
         yield return new WaitForSeconds(timeBetweenAttacks);
 
         isAttacking = false;
+    }
+
+    void onDeath()
+    {
+        thisAgent.isStopped = true;
+        Instantiate(enemyDeathParticle, transform.position, Quaternion.identity);
+        StartCoroutine(deathTimer());
+    }
+
+    IEnumerator deathTimer()
+    {
+        yield return new WaitForSeconds(3f);
+        Destroy(gameObject);
     }
 }

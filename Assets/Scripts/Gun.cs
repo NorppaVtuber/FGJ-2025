@@ -1,11 +1,13 @@
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Gun : MonoBehaviour
 {
     [Header("SetInEditor")]
     [SerializeField] GameObject projectile;
     [SerializeField] ParticleSystem bubbleParticles;
+    [SerializeField] float particleTimer = 5f;
 
     [Header("Gun control is meaningless, we only offer hopes and prayers in this household")]
     [SerializeField] float shootCoolDown;
@@ -51,9 +53,22 @@ public class Gun : MonoBehaviour
             return;
 
         isReadyToShoot = false;
+
+        Instantiate(bubbleParticles, transform.position, transform.rotation); //the rotation probably isn't correct quite yet
+
         Debug.Log("pew pew");
-        //need to instantiate some kind of invisible projectile that causes damage as a particle system can't do that
-        //also need to instantiate the particle system once that's done
+        Vector3 _screenCenter = new Vector3(Screen.width/2, Screen.height/2, 0);
+
+        var _ray = Camera.main.ScreenPointToRay(_screenCenter);
+        RaycastHit _hit;
+        if (Physics.Raycast(_ray, out _hit))
+        {
+            if(_hit.collider.tag == "Enemy")
+            {
+                managerInstance.GetEnemyHealth().TakeDamage(damage);
+                Debug.Log("Hit enemy");
+            }
+        }
     }
 
     void resetShooting()

@@ -274,7 +274,7 @@ GameObject:
   - component: {fileID: 382045385}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -330,9 +330,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1
-  OnEnemyDamageTaken:
-    m_PersistentCalls:
-      m_Calls: []
   OnEnemyDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -352,6 +349,7 @@ MonoBehaviour:
   attackRange: 3.2
   timeBetweenAttacks: 3
   attackDamage: 1
+  enemyDeathParticle: {fileID: 0}
 --- !u!1 &407941488
 GameObject:
   m_ObjectHideFlags: 0
@@ -1286,7 +1284,8 @@ MonoBehaviour:
   playerMovement: {fileID: 2144666950}
   playerHealth: {fileID: 2144666951}
   gun: {fileID: 1506734715}
-  enemyTypes: []
+  enemyMovement: {fileID: 0}
+  enemyHealth: {fileID: 0}
 --- !u!4 &1365150278
 Transform:
   m_ObjectHideFlags: 0
@@ -1314,6 +1313,7 @@ GameObject:
   - component: {fileID: 1506734714}
   - component: {fileID: 1506734713}
   - component: {fileID: 1506734712}
+  - component: {fileID: 1506734716}
   - component: {fileID: 1506734715}
   m_Layer: 0
   m_Name: Gun
@@ -1428,6 +1428,19 @@ MonoBehaviour:
   shootCoolDown: 0.4
   damage: 0
   shootKey: 323
+--- !u!114 &1506734716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506734710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f8444a557b0b2f468ec997d912bed31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  managerInstance: {fileID: 0}
 --- !u!1 &1517625337
 GameObject:
   m_ObjectHideFlags: 0
