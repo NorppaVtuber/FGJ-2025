@@ -72,5 +72,8 @@ public class GameManager : MonoBehaviour
     void sendDeathMessage()
     {
         deathMessageObject.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }
