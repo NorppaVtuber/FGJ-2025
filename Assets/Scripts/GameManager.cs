@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [Header("UI stuff")]
     [SerializeField] List<GameObject> healthBubbles;
     [SerializeField] GameObject deathMessageObject;
+    [SerializeField] GameObject victoryMessageObject;
 
     [Header("PlayerStuffs")]
     [SerializeField] PlayerMovement playerMovement;
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
     {
         playerHealth.OnDamageTaken.AddListener(updateUI);
         deathMessageObject.SetActive(false);
+        victoryMessageObject.SetActive(false);
     }
 
     public PlayerMovement GetPlayerMovement() { return playerMovement; }
@@ -45,11 +47,22 @@ public class GameManager : MonoBehaviour
     public void ResetButton()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1;
     }
 
     public void BackButton()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    public void Victory()
+    {
+        victoryMessageObject.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        Time.timeScale = 0;
     }
 
     void updateUI()
