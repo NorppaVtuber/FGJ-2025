@@ -81,7 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sightRange: 7.1
-  attackRange: 3.1
+  attackRange: 0.9
   timeBetweenAttacks: 3
   attackDamage: 1
   enemyDeathParticle: {fileID: 8420864238079694305, guid: 1d489fad3ec58f141b70d626ababfb9a, type: 3}
@@ -139,7 +139,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 92c4fe55f8e031f40b6c1a98473ef937, type: 3}
   m_Resource: {fileID: 8300000, guid: 92c4fe55f8e031f40b6c1a98473ef937, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.125
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 1
   Mute: 1
@@ -234,6 +234,26 @@ PrefabInstance:
     - target: {fileID: 1634338786815466418, guid: e92fcb44b1b325b47899cc686f736bd0, type: 3}
       propertyPath: m_Name
       value: FGJ_Monster3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1968021722098275919, guid: e92fcb44b1b325b47899cc686f736bd0, type: 3}
+      propertyPath: m_Size.x
+      value: 0.021630513
+      objectReference: {fileID: 0}
+    - target: {fileID: 1968021722098275919, guid: e92fcb44b1b325b47899cc686f736bd0, type: 3}
+      propertyPath: m_Size.y
+      value: 0.002410847
+      objectReference: {fileID: 0}
+    - target: {fileID: 1968021722098275919, guid: e92fcb44b1b325b47899cc686f736bd0, type: 3}
+      propertyPath: m_Center.x
+      value: 0.0015480744
+      objectReference: {fileID: 0}
+    - target: {fileID: 1968021722098275919, guid: e92fcb44b1b325b47899cc686f736bd0, type: 3}
+      propertyPath: m_Center.y
+      value: 0.00014130656
+      objectReference: {fileID: 0}
+    - target: {fileID: 1968021722098275919, guid: e92fcb44b1b325b47899cc686f736bd0, type: 3}
+      propertyPath: m_Center.z
+      value: 0.010553259
       objectReference: {fileID: 0}
     - target: {fileID: 2154276272802824456, guid: e92fcb44b1b325b47899cc686f736bd0, type: 3}
       propertyPath: m_LocalPosition.x

@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
         playerHealth.OnDamageTaken.AddListener(updateUI);
         deathMessageObject.SetActive(false);
         victoryMessageObject.SetActive(false);
+        Time.timeScale = 1;
     }
 
     public PlayerMovement GetPlayerMovement() { return playerMovement; }

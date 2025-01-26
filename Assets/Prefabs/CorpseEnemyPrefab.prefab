@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sightRange: 7.1
-  attackRange: 3.1
+  attackRange: 2.9
   timeBetweenAttacks: 3
   attackDamage: 1
   enemyDeathParticle: {fileID: 8420864238079694305, guid: 1d489fad3ec58f141b70d626ababfb9a, type: 3}
@@ -81,7 +81,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4038523702822294048}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.21
+  m_Radius: 0.64
   m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -107,7 +107,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 92c4fe55f8e031f40b6c1a98473ef937, type: 3}
   m_Resource: {fileID: 8300000, guid: 92c4fe55f8e031f40b6c1a98473ef937, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.125
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -242,6 +242,18 @@ PrefabInstance:
     - target: {fileID: 3400245620566400406, guid: f3d9df7b1a7221a41a9284e35b25f3df, type: 3}
       propertyPath: m_Name
       value: Monster2Prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 5506826665393322143, guid: f3d9df7b1a7221a41a9284e35b25f3df, type: 3}
+      propertyPath: m_Size.y
+      value: 0.004801819
+      objectReference: {fileID: 0}
+    - target: {fileID: 5506826665393322143, guid: f3d9df7b1a7221a41a9284e35b25f3df, type: 3}
+      propertyPath: m_Center.x
+      value: 0.000475502
+      objectReference: {fileID: 0}
+    - target: {fileID: 5506826665393322143, guid: f3d9df7b1a7221a41a9284e35b25f3df, type: 3}
+      propertyPath: m_Center.y
+      value: 0.00040889598
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

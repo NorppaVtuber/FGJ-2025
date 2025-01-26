@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sightRange: 7.1
-  attackRange: 3.1
+  attackRange: 1.1
   timeBetweenAttacks: 3
   attackDamage: 1
   enemyDeathParticle: {fileID: 8420864238079694305, guid: 1d489fad3ec58f141b70d626ababfb9a, type: 3}
@@ -107,7 +107,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 92c4fe55f8e031f40b6c1a98473ef937, type: 3}
   m_Resource: {fileID: 8300000, guid: 92c4fe55f8e031f40b6c1a98473ef937, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.125
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -238,6 +238,26 @@ PrefabInstance:
     - target: {fileID: 399399166591195944, guid: c2fe2533255e41d4fab87c74670b89b5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667432494367807233, guid: c2fe2533255e41d4fab87c74670b89b5, type: 3}
+      propertyPath: m_Size.x
+      value: 33.008152
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667432494367807233, guid: c2fe2533255e41d4fab87c74670b89b5, type: 3}
+      propertyPath: m_Size.z
+      value: 3.8824284
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667432494367807233, guid: c2fe2533255e41d4fab87c74670b89b5, type: 3}
+      propertyPath: m_Center.x
+      value: 1.8562044
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667432494367807233, guid: c2fe2533255e41d4fab87c74670b89b5, type: 3}
+      propertyPath: m_Center.y
+      value: 0.36888352
+      objectReference: {fileID: 0}
+    - target: {fileID: 1667432494367807233, guid: c2fe2533255e41d4fab87c74670b89b5, type: 3}
+      propertyPath: m_Center.z
+      value: 0.95334786
       objectReference: {fileID: 0}
     - target: {fileID: 5273640699801934600, guid: c2fe2533255e41d4fab87c74670b89b5, type: 3}
       propertyPath: m_Name
