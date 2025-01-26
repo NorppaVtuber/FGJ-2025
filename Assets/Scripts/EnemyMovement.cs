@@ -22,7 +22,6 @@ public class EnemyMovement : MonoBehaviour
 
     [Header("VFX stuffs")]
     [SerializeField] ParticleSystem enemyDeathParticle;
-    [SerializeField] List<GameObject> possibleEnemyMeshes;
 
     bool isDead = false;
     bool isAttacking = false;
@@ -41,10 +40,6 @@ public class EnemyMovement : MonoBehaviour
         thisAgent.isStopped = false;
 
         managerInstance.GetEnemyHealth(gameObject).OnEnemyDeath.AddListener(onDeath);
-
-        int _randomMesh = Random.Range(0, possibleEnemyMeshes.Count);
-        GameObject _chosenMesh = Instantiate(possibleEnemyMeshes[_randomMesh]);
-        _chosenMesh.transform.parent = gameObject.transform;
     }
 
     // Update is called once per frame
@@ -83,20 +78,9 @@ public class EnemyMovement : MonoBehaviour
     }
 #endif
 
-    public void RandomizeStartPosition(Transform _currentSpawnPoint, float _spawnDistance)
-    {
-        Vector3 _randomDirection = Random.insideUnitSphere * _spawnDistance;
-        _randomDirection += transform.position;
-        NavMeshHit _hit;
-        NavMesh.SamplePosition(_randomDirection, out _hit, _spawnDistance, 1);
-        Vector3 _finalPosition = _hit.position;
-
-        thisAgent.SetDestination(_finalPosition);
-    }
-
     void chasePlayer()
     {
-        Debug.Log("Chasing player");
+        //Debug.Log("Chasing player");
         thisAgent.SetDestination(playerPos.position);
     }
 

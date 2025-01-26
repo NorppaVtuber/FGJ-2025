@@ -64,7 +64,7 @@ public class Gun : MonoBehaviour
             Debug.Log("hit  " + _hit.collider.gameObject.name);
             if(_hit.collider.tag == "Enemy")
             {
-                managerInstance.GetEnemyHealth(_hit.collider.gameObject.transform.parent.gameObject).TakeDamage(damage); //I hate this so much but if it works it works
+                managerInstance.GetEnemyHealth(_hit.collider.gameObject.transform.parent.gameObject.transform.parent.gameObject).TakeDamage(damage); //I hate this so fucking much
                 Debug.Log("Hit enemy");
             }
         }
