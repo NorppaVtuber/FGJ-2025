@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
 using System.Collections;
+using System.Collections.Generic;
 
 //TODO: navigation using navmesh, movement, attack, finding the player (FSM?)
 public class EnemyMovement : MonoBehaviour
@@ -21,6 +22,7 @@ public class EnemyMovement : MonoBehaviour
 
     [Header("VFX stuffs")]
     [SerializeField] ParticleSystem enemyDeathParticle;
+    [SerializeField] AudioSource audioSource;
 
     bool isDead = false;
     bool isAttacking = false;
@@ -39,6 +41,7 @@ public class EnemyMovement : MonoBehaviour
         thisAgent.isStopped = false;
 
         managerInstance.GetEnemyHealth(gameObject).OnEnemyDeath.AddListener(onDeath);
+        audioSource.mute = true;
     }
 
     // Update is called once per frame
@@ -62,6 +65,7 @@ public class EnemyMovement : MonoBehaviour
         if(_distanceFromPlayer <= attackRange && !isAttacking)
         {
             thisAgent.isStopped = true;
+            audioSource.mute = true;
             StartCoroutine(attackPlayer());
         }
     }
@@ -77,20 +81,10 @@ public class EnemyMovement : MonoBehaviour
     }
 #endif
 
-    public void RandomizeStartPosition(Transform _currentSpawnPoint, float _spawnDistance)
-    {
-        Vector3 _randomDirection = Random.insideUnitSphere * _spawnDistance;
-        _randomDirection += transform.position;
-        NavMeshHit _hit;
-        NavMesh.SamplePosition(_randomDirection, out _hit, _spawnDistance, 1);
-        Vector3 _finalPosition = _hit.position;
-
-        thisAgent.SetDestination(_finalPosition);
-    }
-
     void chasePlayer()
     {
-        Debug.Log("Chasing player");
+        //Debug.Log("Chasing player");
+        audioSource.mute = false;
         thisAgent.SetDestination(playerPos.position);
     }
 
@@ -98,7 +92,7 @@ public class EnemyMovement : MonoBehaviour
     {
         isAttacking = true;
 
-        Debug.Log("Hurt player"); //TODO: add actual attacking
+        Debug.Log("Hurt player");
         managerInstance.GetPlayerHealth().TakeDamage(attackDamage);
 
         yield return new WaitForSeconds(timeBetweenAttacks);

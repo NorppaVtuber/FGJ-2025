@@ -1,22 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    [Header("UI stuff")]
+    [SerializeField] List<GameObject> healthBubbles;
+    [SerializeField] GameObject deathMessageObject;
+    [SerializeField] GameObject victoryMessageObject;
 
     [Header("PlayerStuffs")]
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] PlayerHealth playerHealth;
     [SerializeField] Gun gun;
-
-    [Header("EnemyStuffs")]
-    [SerializeField] GameObject enemyPrefab;
-    [SerializeField] int amountOfEnemies;
-    [SerializeField] List<Transform> enemySpawnPoints;
-    [SerializeField] float spawnDistance;
-
-    Dictionary<EnemyMovement, EnemyHealth> enemies;
 
     private void Awake()
     {
@@ -29,66 +26,67 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         playerHealth.OnDamageTaken.AddListener(updateUI);
-        enemies = new Dictionary<EnemyMovement, EnemyHealth>();
-
-        spawnEnemies();
+        deathMessageObject.SetActive(false);
+        victoryMessageObject.SetActive(false);
     }
 
-    public PlayerMovement GetPlayerMovement() {  return playerMovement; }
+    public PlayerMovement GetPlayerMovement() { return playerMovement; }
     public PlayerHealth GetPlayerHealth() { return playerHealth; }
     public Gun GetPlayerGun() { return gun; }
     public EnemyMovement GetEnemyMovement(GameObject _enemy)  //TODO: go through the Dictionary and find the correct script to reference in these two thingamajigs
     {
         EnemyMovement _neededMovement = _enemy.GetComponent<EnemyMovement>();
-        return _neededMovement; 
+        return _neededMovement;
     }
-    public EnemyHealth GetEnemyHealth(GameObject _enemy) 
+    public EnemyHealth GetEnemyHealth(GameObject _enemy)
     {
         EnemyHealth _neededEnemyHealth = _enemy.GetComponent<EnemyHealth>();
-        return _neededEnemyHealth; 
+        return _neededEnemyHealth;
     }
 
-    void spawnEnemies()
+    public void ResetButton()
     {
-        int _amountOfEnemiesPerTransform = 0;
-        if (enemySpawnPoints.Count <= 0)
-            _amountOfEnemiesPerTransform = amountOfEnemies / 1;
-        else
-            _amountOfEnemiesPerTransform = amountOfEnemies / enemySpawnPoints.Count;
-        int _amountAtCurrentSpawn = 0;
-        int _currentSpawnPoint = 0;
-        for (int i = 0; i < amountOfEnemies; i++)
-        {
-            if(_amountAtCurrentSpawn < _amountOfEnemiesPerTransform)
-            {
-                randomizeSpawnpoints(enemySpawnPoints[_currentSpawnPoint]); 
-            }
-            else if(_amountAtCurrentSpawn >= _amountOfEnemiesPerTransform && _currentSpawnPoint == enemySpawnPoints.Count && i < amountOfEnemies)
-            {
-                //since we're dividing ints there might be enemies "left over" so we need to spawn the rest at the last spawn point
-                randomizeSpawnpoints(enemySpawnPoints[_currentSpawnPoint - 1]);
-            }
-            else
-            {
-                _amountAtCurrentSpawn = 0;
-                _currentSpawnPoint++;
-                i--;
-            }
-        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1;
     }
 
-    void randomizeSpawnpoints(Transform _currentSpawnPoint)
+    public void BackButton()
     {
-        GameObject _newEnemy = Instantiate(enemyPrefab, _currentSpawnPoint);
-        EnemyMovement _savedMovement = _newEnemy.GetComponent<EnemyMovement>();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
 
-        enemies.Add(_savedMovement, _newEnemy.GetComponent<EnemyHealth>());
+    public void Victory()
+    {
+        victoryMessageObject.SetActive(true);
 
-        _savedMovement.RandomizeStartPosition(_currentSpawnPoint, spawnDistance);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        Time.timeScale = 0;
     }
 
     void updateUI()
     {
-        //code to update health bubbles hereeee
+        for (int i = 0; i < healthBubbles.Count; i++) //I could reverse this, or I could just shove the bubbles in the list in a reverse order
+        {
+            if (healthBubbles[i].activeSelf == true)
+            {
+                healthBubbles[i].SetActive(false);
+
+                if (i == healthBubbles.Count - 1)
+                {
+                    sendDeathMessage();
+                }
+                return;
+            }
+        }
+    }
+
+    void sendDeathMessage()
+    {
+        deathMessageObject.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }

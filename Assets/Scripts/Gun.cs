@@ -6,6 +6,8 @@ public class Gun : MonoBehaviour
 {
     [Header("SetInEditor")]
     [SerializeField] ParticleSystem bubbleParticles;
+    [SerializeField] AudioClip bubbleSound;
+    [SerializeField] AudioSource gunSound;
 
     [Header("Gun control is meaningless, we only offer hopes and prayers in this household")]
     [SerializeField] float shootCoolDown;
@@ -54,8 +56,10 @@ public class Gun : MonoBehaviour
 
         Instantiate(bubbleParticles, transform.position, transform.rotation); //the rotation probably isn't correct quite yet <-- Yes it is, past Norppa is a liar
 
-        Debug.Log("pew pew");
-        Vector3 _screenCenter = new Vector3(Screen.width/2, Screen.height/2, 0); //Y U no work???
+        if(!gunSound.isPlaying)
+            gunSound.PlayOneShot(bubbleSound);
+
+        Vector3 _screenCenter = new Vector3(Screen.width/2, Screen.height/2, 0);
 
         var _ray = Camera.main.ScreenPointToRay(_screenCenter);
         RaycastHit _hit;
@@ -64,7 +68,7 @@ public class Gun : MonoBehaviour
             Debug.Log("hit  " + _hit.collider.gameObject.name);
             if(_hit.collider.tag == "Enemy")
             {
-                managerInstance.GetEnemyHealth(_hit.collider.gameObject.transform.parent.gameObject).TakeDamage(damage);
+                managerInstance.GetEnemyHealth(_hit.collider.gameObject.transform.parent.gameObject.transform.parent.gameObject).TakeDamage(damage); //I hate this so fucking much
                 Debug.Log("Hit enemy");
             }
         }
