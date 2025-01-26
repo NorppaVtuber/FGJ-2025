@@ -7,6 +7,10 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] int maxHealth;
     int currentHealth;
 
+    [Header("Audio stuffs")]
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip deathSound;
+
     public UnityEvent OnEnemyDeath;
 
     private void Awake()
@@ -29,6 +33,7 @@ public class EnemyHealth : MonoBehaviour
         if (currentHealth <= 0)
         {
             OnEnemyDeath.Invoke();
+            audioSource.PlayOneShot(deathSound);
             Destroy(gameObject);
         }
     }

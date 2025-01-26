@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Events;
 
 public class PlayerHealth : MonoBehaviour
@@ -9,6 +10,10 @@ public class PlayerHealth : MonoBehaviour
 
     public UnityEvent OnDamageTaken; //add a listener to this for the UI script (eventually), that hndles updating the UI sprites
     public UnityEvent OnDeath;
+
+    [Header("Audio stuffs")]
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip hurtSound;
 
     public bool GetIsDead() { return currentHealth <= 0; }
 
@@ -32,6 +37,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= _damageAmount;
 
         OnDamageTaken.Invoke(); //update any UI elements with this
+        audioSource.PlayOneShot(hurtSound);
 
         Debug.Log("Player took damage!");
 

@@ -22,6 +22,7 @@ public class EnemyMovement : MonoBehaviour
 
     [Header("VFX stuffs")]
     [SerializeField] ParticleSystem enemyDeathParticle;
+    [SerializeField] AudioSource audioSource;
 
     bool isDead = false;
     bool isAttacking = false;
@@ -40,6 +41,7 @@ public class EnemyMovement : MonoBehaviour
         thisAgent.isStopped = false;
 
         managerInstance.GetEnemyHealth(gameObject).OnEnemyDeath.AddListener(onDeath);
+        audioSource.mute = true;
     }
 
     // Update is called once per frame
@@ -63,6 +65,7 @@ public class EnemyMovement : MonoBehaviour
         if(_distanceFromPlayer <= attackRange && !isAttacking)
         {
             thisAgent.isStopped = true;
+            audioSource.mute = true;
             StartCoroutine(attackPlayer());
         }
     }
@@ -81,6 +84,7 @@ public class EnemyMovement : MonoBehaviour
     void chasePlayer()
     {
         //Debug.Log("Chasing player");
+        audioSource.mute = false;
         thisAgent.SetDestination(playerPos.position);
     }
 
