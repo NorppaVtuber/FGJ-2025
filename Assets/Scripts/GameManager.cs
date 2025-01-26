@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
 
     void updateUI()
     {
-        for (int i = 0; i < healthBubbles.Count; i++)
+        for (int i = 0; i < healthBubbles.Count; i++) //I could reverse this, or I could just shove the bubbles in the list in a reverse order
         {
             if(healthBubbles[i].activeSelf == true)
             {
